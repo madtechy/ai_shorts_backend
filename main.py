@@ -18,3 +18,27 @@ app.add_middleware(
 
 # 🧠 Static folder mount
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+# Request body ke liye model
+class ScriptRequest(BaseModel):
+    topic: str
+    style: str
+
+
+class VoiceRequest(BaseModel):
+    script: str
+
+
+# ✅ API to generate script
+@app.post("/generate-script")
+def generate_script_api(req: ScriptRequest):
+    script = generate_script(req.topic, req.style)
+    return {"script": script}
+
+
+# ✅ API to generate voice
+@app.post("/generate-voice")
+def generate_voice_api(req: VoiceRequest):
+    audio_url = generate_voice(req.script)
+    return {"audio_url": audio_url}
