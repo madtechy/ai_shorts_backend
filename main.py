@@ -31,10 +31,17 @@ class VoiceRequest(BaseModel):
 
 
 # ✅ API to generate script
+from script_generator import clean_script  # 👈 is line ko import section me add karo
+
 @app.post("/generate-script")
 def generate_script_api(req: ScriptRequest):
     script = generate_script(req.topic, req.style)
-    return {"script": script}
+    cleaned = clean_script(script)
+    return {
+        "raw_script": script,
+        "cleaned_script": cleaned
+    }
+
 
 
 # ✅ API to generate voice

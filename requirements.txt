@@ -3,3 +3,4 @@ uvicorn
 gtts
 google-generativeai
 python-multipart
+requests
